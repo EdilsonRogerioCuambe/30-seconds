@@ -43,21 +43,23 @@ export default function Deck({ cards }: DeckProps) {
 
   const nextCard = () => {
     setIsFlipped(false)
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % shuffledCards.length)
     setTimeLeft(30)
+    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % shuffledCards.length)
   }
 
   const currentCard = cards[currentCardIndex] || { front: [], back: [] }
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
-      <div className="text-3xl font-bold mb-4">
+      <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
         <CountdownCircleTimer
+          key={currentCardIndex}
           isPlaying={timeLeft > 0}
           duration={30}
-          colors={['#09cf62', '#F7B801', '#A30000', '#A30000']}
-          colorsTime={[20, 10, 5, 0]}
+          colors={['#09cf62', '#F7B801', '#A30000']}
           strokeWidth={5}
+          colorsTime={[30, 20, 10, 0]}
+          trailColor="#333"
           size={75}
         >
           {({ remainingTime }) => remainingTime}
@@ -65,11 +67,21 @@ export default function Deck({ cards }: DeckProps) {
       </div>
       <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
         <motion.div
-          key={currentCardIndex}
-          initial={{ x: 300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -300, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotate: 0,
+            transition: { duration: 0.5, ease: 'easeInOut' },
+          }}
+          exit={{
+            opacity: 0,
+            y: -100,
+            scale: 0.5,
+            rotate: 180,
+            transition: { duration: 0.5, ease: 'easeInOut' },
+          }}
           className="flex justify-center items-center relative w-96 h-52 rounded-lg shadow-lg"
           style={{ perspective: '1000px' }}
         >
@@ -112,7 +124,9 @@ export default function Deck({ cards }: DeckProps) {
         </button>
         <button
           type="button"
-          onClick={nextCard}
+          onClick={
+            currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
+          }
           className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-700 transition"
         >
           Próximo
