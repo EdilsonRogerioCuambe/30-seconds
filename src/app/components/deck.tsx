@@ -21,22 +21,18 @@ export default function Deck({ cards }: DeckProps) {
   const [timeLeft, setTimeLeft] = useState(30)
 
   const shuffleCards = (cards: CardProps[]) => {
-    // Cria uma cópia do array para evitar mutação direta
     const shuffled = [...cards]
     let currentIndex = shuffled.length
+    let temporaryValue
     let randomIndex
 
-    // Enquanto ainda houver elementos para embaralhar...
     while (currentIndex !== 0) {
-      // Escolhe um elemento restante...
       randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex--
+      currentIndex -= 1
 
-      // E troca-o pelo elemento atual.
-      ;[shuffled[currentIndex], shuffled[randomIndex]] = [
-        shuffled[randomIndex],
-        shuffled[currentIndex],
-      ]
+      temporaryValue = shuffled[currentIndex]
+      shuffled[currentIndex] = shuffled[randomIndex]
+      shuffled[randomIndex] = temporaryValue
     }
 
     return shuffled
