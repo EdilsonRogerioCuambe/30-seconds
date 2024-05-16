@@ -72,7 +72,7 @@ export default function Page() {
         title="submit"
         type="submit"
         onClick={handleSubmit}
-        className={`w-full p-2 bg-green-400 text-white rounded hover:bg-green-600 transition ${
+        className={`w-full p-2 bg-green-400 font-bold rounded hover:bg-green-600 transition ${
           loading && 'cursor-not-allowed'
         }`}
       >
