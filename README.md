@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 30 SECONDS GAME DECK CARDS
 
-## Getting Started
+## 1. What is 30 Seconds Game Deck Cards?
+30 Seconds Game Deck Cards is a card game that is designed to be played by 4 or more players. The game is played in teams and the objective of the game is to guess as many words as possible from a given category in 30 seconds. The game is played in rounds and the team with the most points at the end of the game wins.
 
-First, run the development server:
+## 2. How to play 30 Seconds Game Deck Cards?
+To play 30 Seconds Game Deck Cards, you will need the following:
+- 30 Seconds Game Deck Cards
+- A timer
+- A score sheet
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The game is played in the following steps:
+1. Divide the players into two teams.
+2. Shuffle the deck of cards and place them face down on the table.
+3. Set the timer to 30 seconds.
+4. The first team selects a player to be the clue giver.
+5. The clue giver draws a card from the deck and tries to get their team to guess as many words as possible from the card's category in 30 seconds.
+6. The clue giver can use any words or gestures to get their team to guess the words, but they cannot say the word itself.
+7. The team earns a point for each word they guess correctly.
+8. The other team keeps track of the points earned by the clue giver's team.
+9. The teams take turns being the clue giver until all the cards have been used.
+10. The team with the most points at the end of the game wins.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 3. What are the categories in 30 Seconds Game Deck Cards?  
+The categories in 30 Seconds Game Deck Cards include:
+- Animals
+- Countries
+- Movies
+- Famous People
+- Food and Drink
+- Sports
+- TV Shows
+- Brands
+- Music
+- Science
+- Technology
+- Games
+- Books
+- Art
+- History
+- Nature
+- Mythology
+- Geography
+- Literature
+- Pop Culture
+- Fashion
+- Architecture
+- Politics
+- Religion
+- Space
+- Vehicles
+- Money
+- Crime
+- Health
+- Education
+- Travel
+- Hobbies
+- Jobs
+- Sports
