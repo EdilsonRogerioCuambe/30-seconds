@@ -21,21 +21,7 @@ export default function Deck({ cards }: DeckProps) {
   const [timeLeft, setTimeLeft] = useState(30)
 
   const shuffleCards = (cards: CardProps[]) => {
-    const shuffled = [...cards]
-    let currentIndex = shuffled.length
-    let temporaryValue
-    let randomIndex
-
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex -= 1
-
-      temporaryValue = shuffled[currentIndex]
-      shuffled[currentIndex] = shuffled[randomIndex]
-      shuffled[randomIndex] = temporaryValue
-    }
-
-    return shuffled
+    return cards.sort(() => Math.random() - 0.3)
   }
 
   useEffect(() => {
@@ -151,11 +137,9 @@ export default function Deck({ cards }: DeckProps) {
           onClick={
             currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
           }
-          disabled={
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
-          }
+          disabled={currentCardIndex === shuffledCards.length - 1}
           className={`${
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+            currentCardIndex === shuffledCards.length - 1
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-green-400 hover:bg-green-600'
           } text-white px-4 py-2 rounded transition`}
