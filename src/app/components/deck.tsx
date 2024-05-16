@@ -139,7 +139,7 @@ export default function Deck({ cards }: DeckProps) {
           }
           disabled={currentCardIndex === shuffledCards.length - 1}
           className={`${
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+            currentCardIndex === shuffledCards.length - 1
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-green-400 hover:bg-green-600'
           } text-white px-4 py-2 rounded transition`}
