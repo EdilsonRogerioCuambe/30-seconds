@@ -13,9 +13,25 @@ interface DeckProps {
 }
 
 export default function Deck({ cards }: DeckProps) {
+  const [shuffledCards, setShuffledCards] = useState<CardProps[]>([])
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
   const [timeLeft, setTimeLeft] = useState(30)
+
+  // Shuffle cards function
+  const shuffleCards = (cards: CardProps[]) => {
+    const array = cards.slice() // Create a copy of the array
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[array[i], array[j]] = [array[j], array[i]] // Swap elements
+    }
+    return array
+  }
+
+  // Effect to shuffle cards on load
+  useEffect(() => {
+    setShuffledCards(shuffleCards(cards))
+  }, [cards])
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -33,7 +49,7 @@ export default function Deck({ cards }: DeckProps) {
 
   const nextCard = () => {
     setIsFlipped(false)
-    setCurrentCardIndex((currentCardIndex + 1) % cards.length)
+    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % shuffledCards.length)
     setTimeLeft(30)
   }
 
