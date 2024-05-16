@@ -104,7 +104,7 @@ export default function Deck({ cards }: DeckProps) {
             {currentCard.front.map((word, index) => (
               <div
                 key={index}
-                className="text-start text-2xl font-bold text-[#f5f5f5] my-1"
+                className="text-start text-xl font-bold text-[#f5f5f5] my-1"
               >
                 {word}
               </div>
@@ -117,7 +117,7 @@ export default function Deck({ cards }: DeckProps) {
             transition={{ duration: 0.5 }}
           >
             {currentCard.back.map((word, index) => (
-              <div key={index} className="text-2xl font-bold text-white my-1">
+              <div key={index} className="text-xl font-bold text-white my-1">
                 {word}
               </div>
             ))}
