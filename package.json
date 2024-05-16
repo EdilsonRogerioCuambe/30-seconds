@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "rm -rf .next && next dev",
-    "build": "rm -rf .next && prisma generate && next build",
+    "build": "rm -rf .next && prisma generate && next build && prisma db push",
     "start": "rm -rf .next && next start",
     "lint": "next lint"
   },
