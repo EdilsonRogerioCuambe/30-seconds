@@ -137,9 +137,11 @@ export default function Deck({ cards }: DeckProps) {
           onClick={
             currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
           }
-          disabled={currentCardIndex === shuffledCards.length - 1}
+          disabled={
+            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+          }
           className={`${
-            currentCardIndex === shuffledCards.length - 1
+            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-green-400 hover:bg-green-600'
           } text-white px-4 py-2 rounded transition`}
