@@ -6,7 +6,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '30 Segungos',
+  title: '30 Segundos',
   description: '30 Segundos é um jogo de tabuleiro de perguntas e respostas.',
 }
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#202024] text-[#f5f5f5]`}>
         {children}
         <Toaster position="top-center" />
       </body>
