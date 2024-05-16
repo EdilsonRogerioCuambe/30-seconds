@@ -53,12 +53,12 @@ export default function Deck({ cards }: DeckProps) {
     <div className="flex flex-col min-h-screen items-center justify-center">
       <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
         <CountdownCircleTimer
-          key={currentCardIndex}
+          key={currentCard.id}
           isPlaying={timeLeft > 0}
           duration={30}
-          colors={['#09cf62', '#F7B801', '#A30000']}
+          colors={['#09cf62', '#F7B801', '#A30000', '#000']}
           strokeWidth={5}
-          colorsTime={[30, 20, 10, 0]}
+          colorsTime={[30, 20, 10]}
           trailColor="#333"
           size={75}
         >
