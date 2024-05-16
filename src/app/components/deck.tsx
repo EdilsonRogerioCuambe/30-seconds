@@ -137,9 +137,7 @@ export default function Deck({ cards }: DeckProps) {
           onClick={
             currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
           }
-          disabled={
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
-          }
+          disabled={currentCardIndex === shuffledCards.length - 1}
           className={`${
             currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
               ? 'bg-gray-400 cursor-not-allowed'
