@@ -51,20 +51,25 @@ export default function Deck({ cards }: DeckProps) {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
-      <div className="text-5xl font-bold mb-4">
+      <div className="text-3xl font-bold mb-4">
         <CountdownCircleTimer
           isPlaying={timeLeft > 0}
           duration={30}
           colors={['#09cf62', '#F7B801', '#A30000', '#A30000']}
           colorsTime={[20, 10, 5, 0]}
-          strokeWidth={6}
-          size={120}
+          strokeWidth={5}
+          size={75}
         >
           {({ remainingTime }) => remainingTime}
         </CountdownCircleTimer>
       </div>
       <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
         <motion.div
+          key={currentCardIndex}
+          initial={{ x: 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -300, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className="flex justify-center items-center relative w-96 h-52 rounded-lg shadow-lg"
           style={{ perspective: '1000px' }}
         >
