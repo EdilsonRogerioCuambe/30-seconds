@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import tic from '@/assets/sounds/tic.mp3'
 
 interface CardProps {
   id: string
@@ -27,11 +28,20 @@ export default function Deck({ cards }: DeckProps) {
     setShuffledCards(shuffleCards(cards))
   }, [cards])
 
+  const playTic = async () => {
+    const audio = new Audio(tic)
+    audio.play()
+  }
+
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1)
       }, 1000)
+
+      if (timeLeft <= 5 && timeLeft > 0) {
+        playTic()
+      }
 
       return () => clearTimeout(timer)
     }
@@ -127,8 +137,14 @@ export default function Deck({ cards }: DeckProps) {
           onClick={
             currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
           }
-          disabled={currentCardIndex === shuffledCards.length - 1}
-          className="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          disabled={
+            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+          }
+          className={`${
+            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-green-400 hover:bg-green-600'
+          } text-white px-4 py-2 rounded transition`}
         >
           Próximo
         </button>
