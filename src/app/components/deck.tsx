@@ -15,18 +15,10 @@ interface DeckProps {
 }
 
 export default function Deck({ cards }: DeckProps) {
-  const [shuffledCards, setShuffledCards] = useState<CardProps[]>([])
+  const [currentCards, setCurrentCards] = useState<CardProps[]>(cards)
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
   const [timeLeft, setTimeLeft] = useState(30)
-
-  const shuffleCards = (cards: CardProps[]) => {
-    return cards.sort(() => Math.random() - 0.3)
-  }
-
-  useEffect(() => {
-    setShuffledCards(shuffleCards(cards))
-  }, [cards])
 
   const playTic = async () => {
     const audio = new Audio(tic)
@@ -54,10 +46,18 @@ export default function Deck({ cards }: DeckProps) {
   const nextCard = () => {
     setIsFlipped(false)
     setTimeLeft(30)
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % shuffledCards.length)
+
+    const nextIndex = currentCardIndex + 1
+    if (nextIndex < currentCards.length) {
+      setCurrentCardIndex(nextIndex)
+    } else {
+      const newOrder = [...currentCards.slice(1), currentCards[0]]
+      setCurrentCards(newOrder)
+      setCurrentCardIndex(0)
+    }
   }
 
-  const currentCard = cards[currentCardIndex] || { front: [], back: [] }
+  const currentCard = currentCards[currentCardIndex]
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
@@ -135,13 +135,13 @@ export default function Deck({ cards }: DeckProps) {
         <button
           type="button"
           onClick={
-            currentCardIndex === shuffledCards.length - 1 ? undefined : nextCard
+            currentCardIndex === cards.length - 1 || timeLeft > 0
+              ? undefined
+              : nextCard
           }
-          disabled={
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
-          }
+          disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
           className={`${
-            currentCardIndex === shuffledCards.length - 1 || timeLeft > 0
+            currentCardIndex === cards.length - 1 || timeLeft > 0
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-green-400 hover:bg-green-600'
           } text-white px-4 py-2 rounded transition`}
