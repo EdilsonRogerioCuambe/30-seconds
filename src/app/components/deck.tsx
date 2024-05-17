@@ -20,15 +20,27 @@ export default function Deck({ cards }: DeckProps) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [timeLeft, setTimeLeft] = useState(30)
 
+  useEffect(() => {
+    // Recuperar o estado do localStorage apenas no lado do cliente
+    const savedIndex = parseInt(localStorage.getItem('currentCardIndex') || '0')
+    const savedFlipped = localStorage.getItem('isFlipped') === 'true'
+    const savedTimeLeft = parseInt(localStorage.getItem('timeLeft') || '30')
+
+    setCurrentCardIndex(savedIndex)
+    setIsFlipped(savedFlipped)
+    setTimeLeft(savedTimeLeft)
+  }, [])
+
   const playTic = async () => {
     const audio = new Audio(tic)
-    audio.play()
+    await audio.play()
   }
 
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1)
+        localStorage.setItem('timeLeft', (timeLeft - 1).toString())
       }, 1000)
 
       if (timeLeft <= 5 && timeLeft > 0) {
@@ -39,6 +51,12 @@ export default function Deck({ cards }: DeckProps) {
     }
   }, [timeLeft])
 
+  useEffect(() => {
+    // Salvar o estado atual no localStorage
+    localStorage.setItem('currentCardIndex', currentCardIndex.toString())
+    localStorage.setItem('isFlipped', isFlipped.toString())
+  }, [currentCardIndex, isFlipped])
+
   const toggleFlip = () => {
     setIsFlipped(!isFlipped)
   }
@@ -46,6 +64,7 @@ export default function Deck({ cards }: DeckProps) {
   const nextCard = () => {
     setIsFlipped(false)
     setTimeLeft(30)
+    localStorage.setItem('timeLeft', '30')
 
     const nextIndex = currentCardIndex + 1
     if (nextIndex < currentCards.length) {
