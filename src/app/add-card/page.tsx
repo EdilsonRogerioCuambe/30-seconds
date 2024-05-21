@@ -9,6 +9,14 @@ export default function Page() {
   const [backWords, setBackWords] = useState<string[]>(['', '', '', ''])
 
   const handleSubmit = async () => {
+    if (
+      frontWords.some((word) => word === '') ||
+      backWords.some((word) => word === '')
+    ) {
+      toast.error('Preencha todos os campos antes de adicionar o card')
+      return
+    }
+
     setLoading(true)
     try {
       await axios.post('/api/add-card', {
