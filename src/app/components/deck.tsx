@@ -106,17 +106,14 @@ export default function Deck({ cards }: DeckProps) {
       {isPlaying && (
         <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
             animate={{
               opacity: 1,
-              y: 0,
               scale: 1,
               rotate: 0,
               transition: { duration: 0.5, ease: 'easeInOut' },
             }}
             exit={{
               opacity: 0,
-              y: -100,
               scale: 0.5,
               rotate: 180,
               transition: { duration: 0.5, ease: 'easeInOut' },
@@ -125,7 +122,7 @@ export default function Deck({ cards }: DeckProps) {
             style={{ perspective: '1000px' }}
           >
             <motion.div
-              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-yellow-600 p-4"
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-yellow-400 p-4"
               style={{ backfaceVisibility: 'hidden' }}
               animate={{ rotateY: isFlipped ? 180 : 0 }}
               transition={{ duration: 0.5 }}
@@ -133,20 +130,23 @@ export default function Deck({ cards }: DeckProps) {
               {currentCard.front.map((word, index) => (
                 <div
                   key={index}
-                  className="text-start text-xl font-bold text-[#f5f5f5] my-1"
+                  className="text-start uppercase text-black text-xl font-bold my-1"
                 >
                   {word}
                 </div>
               ))}
             </motion.div>
             <motion.div
-              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-blue-600 p-4"
-              style={{ backfaceVisibility: 'hidden', rotateY: '180deg' }}
-              animate={{ rotateY: isFlipped ? 360 : 180 }}
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-blue-400 p-4"
+              style={{ backfaceVisibility: 'hidden' }}
+              animate={{ rotateY: isFlipped ? 0 : 180 }}
               transition={{ duration: 0.5 }}
             >
               {currentCard.back.map((word, index) => (
-                <div key={index} className="text-xl font-bold text-white my-1">
+                <div
+                  key={index}
+                  className="text-xl uppercase text-black font-bold my-1"
+                >
                   {word}
                 </div>
               ))}
@@ -161,9 +161,9 @@ export default function Deck({ cards }: DeckProps) {
             onClick={toggleFlip}
             className={`${
               isFlipped
-                ? 'bg-yellow-500 hover:bg-yellow-700'
-                : 'bg-blue-500 hover:bg-blue-700'
-            } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
+                ? 'bg-yellow-400 hover:bg-yellow-600'
+                : 'bg-blue-400 hover:bg-blue-600'
+            } text-black uppercase font-extrabold px-4 py-2 rounded transition-all duration-300 ease-in-out`}
           >
             {isFlipped ? 'Frente' : 'Verso'}
           </button>
@@ -179,7 +179,7 @@ export default function Deck({ cards }: DeckProps) {
               currentCardIndex === cards.length - 1 || timeLeft > 0
                 ? 'bg-gray-500 cursor-not-allowed'
                 : 'bg-green-500 hover:bg-green-700'
-            } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
+            } text-black uppercase font-extrabold px-4 py-2 rounded transition-all duration-300 ease-in-out`}
           >
             Próximo
           </button>
@@ -199,8 +199,8 @@ export default function Deck({ cards }: DeckProps) {
           className={`${
             isPlaying
               ? 'bg-red-400 hover:bg-red-600'
-              : 'bg-green-500 hover:bg-green-700'
-          } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
+              : 'bg-green-400 hover:bg-green-600'
+          } text-black font-extrabold uppercase px-4 py-2 rounded transition-all duration-300 ease-in-out`}
         >
           {isPlaying ? 'Pausar' : isPaused ? 'Continuar' : 'Iniciar'}
         </button>
