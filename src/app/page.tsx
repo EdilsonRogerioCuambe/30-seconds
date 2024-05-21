@@ -1,6 +1,8 @@
 import { db } from '@/db/prisma'
 import Deck from './components/deck'
 
+export const dynamic = 'force-dynamic'
+
 interface CardProps {
   id: string
   front: string[]
