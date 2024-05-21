@@ -60,6 +60,7 @@ export default function Deck({ cards }: DeckProps) {
 
   const startGame = () => {
     setIsPlaying(true)
+    setTimeLeft(30) // Reset the timer when starting the game
   }
 
   const pauseGame = () => {
@@ -70,93 +71,108 @@ export default function Deck({ cards }: DeckProps) {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
-      <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
-        <CountdownCircleTimer
-          key={currentCard.id}
-          isPlaying={isPlaying}
-          duration={30}
-          colors={['#09cf62', '#F7B801', '#A30000', '#000']}
-          strokeWidth={5}
-          colorsTime={[30, 20, 10]}
-          trailColor="#333"
-          size={75}
-        >
-          {({ remainingTime }) => remainingTime}
-        </CountdownCircleTimer>
-      </div>
-      <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotate: 0,
-            transition: { duration: 0.5, ease: 'easeInOut' },
-          }}
-          exit={{
-            opacity: 0,
-            y: -100,
-            scale: 0.5,
-            rotate: 180,
-            transition: { duration: 0.5, ease: 'easeInOut' },
-          }}
-          className="flex justify-center items-center relative w-96 h-52 rounded-lg shadow-lg"
-          style={{ perspective: '1000px' }}
-        >
-          <motion.div
-            className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-yellow-600 p-4"
-            style={{ backfaceVisibility: 'hidden' }}
-            animate={{ rotateY: isFlipped ? 180 : 0 }}
-            transition={{ duration: 0.5 }}
+      {!isPlaying && (
+        <div className="flex flex-col items-center justify-center text-center w-96 h-52 rounded-lg shadow-lg bg-purple-400 p-4">
+          <p className="text-2xl font-bold text-[#f5f5f5] mb-2">
+            Clique em iniciar para mostrar as cartas
+          </p>
+        </div>
+      )}
+      {isPlaying && (
+        <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
+          <CountdownCircleTimer
+            key={currentCard.id}
+            isPlaying={isPlaying}
+            duration={30}
+            colors={['#09cf62', '#F7B801', '#A30000', '#000']}
+            strokeWidth={5}
+            colorsTime={[30, 20, 10]}
+            trailColor="#333"
+            size={75}
           >
-            {currentCard.front.map((word, index) => (
-              <div
-                key={index}
-                className="text-start text-xl font-bold text-[#f5f5f5] my-1"
-              >
-                {word}
-              </div>
-            ))}
-          </motion.div>
+            {({ remainingTime }) => remainingTime}
+          </CountdownCircleTimer>
+        </div>
+      )}
+      {isPlaying && (
+        <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
           <motion.div
-            className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-blue-600 p-4"
-            style={{ backfaceVisibility: 'hidden', rotateY: '180deg' }}
-            animate={{ rotateY: isFlipped ? 360 : 180 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 100 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              rotate: 0,
+              transition: { duration: 0.5, ease: 'easeInOut' },
+            }}
+            exit={{
+              opacity: 0,
+              y: -100,
+              scale: 0.5,
+              rotate: 180,
+              transition: { duration: 0.5, ease: 'easeInOut' },
+            }}
+            className="flex justify-center items-center relative w-96 h-52 rounded-lg shadow-lg"
+            style={{ perspective: '1000px' }}
           >
-            {currentCard.back.map((word, index) => (
-              <div key={index} className="text-xl font-bold text-white my-1">
-                {word}
-              </div>
-            ))}
+            <motion.div
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-yellow-600 p-4"
+              style={{ backfaceVisibility: 'hidden' }}
+              animate={{ rotateY: isFlipped ? 180 : 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {currentCard.front.map((word, index) => (
+                <div
+                  key={index}
+                  className="text-start text-xl font-bold text-[#f5f5f5] my-1"
+                >
+                  {word}
+                </div>
+              ))}
+            </motion.div>
+            <motion.div
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-blue-600 p-4"
+              style={{ backfaceVisibility: 'hidden', rotateY: '180deg' }}
+              animate={{ rotateY: isFlipped ? 360 : 180 }}
+              transition={{ duration: 0.5 }}
+            >
+              {currentCard.back.map((word, index) => (
+                <div key={index} className="text-xl font-bold text-white my-1">
+                  {word}
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      )}
       <div className="mt-4 flex space-x-4">
-        <button
-          type="button"
-          onClick={toggleFlip}
-          className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          {isFlipped ? 'Frente' : 'Verso'}
-        </button>
-        <button
-          type="button"
-          onClick={
-            currentCardIndex === cards.length - 1 || timeLeft > 0
-              ? undefined
-              : nextCard
-          }
-          disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
-          className={`${
-            currentCardIndex === cards.length - 1 || timeLeft > 0
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-green-400 hover:bg-green-600'
-          } text-white px-4 py-2 rounded transition`}
-        >
-          Próximo
-        </button>
+        {isPlaying && (
+          <>
+            <button
+              type="button"
+              onClick={toggleFlip}
+              className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            >
+              {isFlipped ? 'Frente' : 'Verso'}
+            </button>
+            <button
+              type="button"
+              onClick={
+                currentCardIndex === cards.length - 1 || timeLeft > 0
+                  ? undefined
+                  : nextCard
+              }
+              disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
+              className={`${
+                currentCardIndex === cards.length - 1 || timeLeft > 0
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-green-400 hover:bg-green-600'
+              } text-white px-4 py-2 rounded transition`}
+            >
+              Próximo
+            </button>
+          </>
+        )}
         <button
           type="button"
           onClick={isPlaying ? pauseGame : startGame}
