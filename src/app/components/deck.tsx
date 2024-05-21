@@ -19,6 +19,7 @@ export default function Deck({ cards }: DeckProps) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
   const [timeLeft, setTimeLeft] = useState(30)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const playTic = async () => {
     const audio = new Audio(tic)
@@ -26,7 +27,7 @@ export default function Deck({ cards }: DeckProps) {
   }
 
   useEffect(() => {
-    if (timeLeft > 0) {
+    if (timeLeft > 0 && isPlaying) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1)
       }, 1000)
@@ -37,7 +38,7 @@ export default function Deck({ cards }: DeckProps) {
 
       return () => clearTimeout(timer)
     }
-  }, [timeLeft])
+  }, [timeLeft, isPlaying])
 
   const toggleFlip = () => {
     setIsFlipped(!isFlipped)
@@ -57,6 +58,14 @@ export default function Deck({ cards }: DeckProps) {
     }
   }
 
+  const startGame = () => {
+    setIsPlaying(true)
+  }
+
+  const pauseGame = () => {
+    setIsPlaying(false)
+  }
+
   const currentCard = currentCards[currentCardIndex]
 
   return (
@@ -64,7 +73,7 @@ export default function Deck({ cards }: DeckProps) {
       <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
         <CountdownCircleTimer
           key={currentCard.id}
-          isPlaying={timeLeft > 0}
+          isPlaying={isPlaying}
           duration={30}
           colors={['#09cf62', '#F7B801', '#A30000', '#000']}
           strokeWidth={5}
@@ -147,6 +156,17 @@ export default function Deck({ cards }: DeckProps) {
           } text-white px-4 py-2 rounded transition`}
         >
           Próximo
+        </button>
+        <button
+          type="button"
+          onClick={isPlaying ? pauseGame : startGame}
+          className={`${
+            isPlaying
+              ? 'bg-red-400 hover:bg-red-600'
+              : 'bg-green-400 hover:bg-green-600'
+          } text-white px-4 py-2 rounded transition`}
+        >
+          {isPlaying ? 'Pausar' : 'Iniciar'}
         </button>
       </div>
     </div>
