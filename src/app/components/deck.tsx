@@ -159,7 +159,11 @@ export default function Deck({ cards }: DeckProps) {
           <button
             type="button"
             onClick={toggleFlip}
-            className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            className={`${
+              isFlipped
+                ? 'bg-yellow-500 hover:bg-yellow-700'
+                : 'bg-blue-500 hover:bg-blue-700'
+            } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
           >
             {isFlipped ? 'Frente' : 'Verso'}
           </button>
