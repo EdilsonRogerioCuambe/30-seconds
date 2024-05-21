@@ -20,6 +20,7 @@ export default function Deck({ cards }: DeckProps) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [timeLeft, setTimeLeft] = useState(30)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   const playTic = async () => {
     const audio = new Audio(tic)
@@ -60,25 +61,32 @@ export default function Deck({ cards }: DeckProps) {
 
   const startGame = () => {
     setIsPlaying(true)
+    setIsPaused(false)
     setTimeLeft(30) // Reset the timer when starting the game
   }
 
   const pauseGame = () => {
     setIsPlaying(false)
+    setIsPaused(true)
+  }
+
+  const continueGame = () => {
+    setIsPlaying(true)
+    setIsPaused(false)
   }
 
   const currentCard = currentCards[currentCardIndex]
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
-      {!isPlaying && (
-        <div className="flex flex-col items-center justify-center text-center w-96 h-52 rounded-lg shadow-lg bg-purple-400 p-4">
-          <p className="text-2xl font-bold text-[#f5f5f5] mb-2">
+      {!isPlaying && !isPaused && (
+        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-gray-200 p-4">
+          <p className="text-xl font-bold text-gray-700 mb-2">
             Clique em iniciar para mostrar as cartas
           </p>
         </div>
       )}
-      {isPlaying && (
+      {(isPlaying || isPaused) && (
         <div className="text-3xl relative font-bold mb-4 transition-all duration-300 ease-in-out">
           <CountdownCircleTimer
             key={currentCard.id}
@@ -89,6 +97,7 @@ export default function Deck({ cards }: DeckProps) {
             colorsTime={[30, 20, 10]}
             trailColor="#333"
             size={75}
+            initialRemainingTime={timeLeft}
           >
             {({ remainingTime }) => remainingTime}
           </CountdownCircleTimer>
@@ -145,44 +154,51 @@ export default function Deck({ cards }: DeckProps) {
           </motion.div>
         </AnimatePresence>
       )}
-      <div className="mt-4 flex space-x-4">
-        {isPlaying && (
-          <>
-            <button
-              type="button"
-              onClick={toggleFlip}
-              className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-            >
-              {isFlipped ? 'Frente' : 'Verso'}
-            </button>
-            <button
-              type="button"
-              onClick={
-                currentCardIndex === cards.length - 1 || timeLeft > 0
-                  ? undefined
-                  : nextCard
-              }
-              disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
-              className={`${
-                currentCardIndex === cards.length - 1 || timeLeft > 0
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-green-400 hover:bg-green-600'
-              } text-white px-4 py-2 rounded transition`}
-            >
-              Próximo
-            </button>
-          </>
-        )}
+      {isPlaying && (
+        <div className="mt-4 flex space-x-4">
+          <button
+            type="button"
+            onClick={toggleFlip}
+            className="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+          >
+            {isFlipped ? 'Frente' : 'Verso'}
+          </button>
+          <button
+            type="button"
+            onClick={
+              currentCardIndex === cards.length - 1 || timeLeft > 0
+                ? undefined
+                : nextCard
+            }
+            disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
+            className={`${
+              currentCardIndex === cards.length - 1 || timeLeft > 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-green-400 hover:bg-green-600'
+            } text-white px-4 py-2 rounded transition`}
+          >
+            Próximo
+          </button>
+        </div>
+      )}
+      {isPaused && (
+        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-white p-4 mt-4">
+          <p className="text-2xl font-bold text-center text-purple-400 mb-2">
+            Jogo pausado. Clique em continuar para retomar.
+          </p>
+        </div>
+      )}
+      <div className="mt-4">
         <button
           type="button"
-          onClick={isPlaying ? pauseGame : startGame}
+          onClick={isPlaying ? pauseGame : isPaused ? continueGame : startGame}
           className={`${
             isPlaying
               ? 'bg-red-400 hover:bg-red-600'
-              : 'bg-green-400 hover:bg-green-600'
-          } text-white px-4 py-2 rounded transition`}
+              : 'bg-green-500 hover:bg-green-700'
+          } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
         >
-          {isPlaying ? 'Pausar' : 'Iniciar'}
+          {isPlaying ? 'Pausar' : isPaused ? 'Continuar' : 'Iniciar'}
         </button>
       </div>
     </div>
