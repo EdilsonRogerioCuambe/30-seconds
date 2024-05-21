@@ -80,8 +80,8 @@ export default function Deck({ cards }: DeckProps) {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
       {!isPlaying && !isPaused && (
-        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-gray-200 p-4">
-          <p className="text-xl font-bold text-gray-700 mb-2">
+        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-white p-4">
+          <p className="text-2xl font-bold text-purple-400 text-center mb-2">
             Clique em iniciar para mostrar as cartas
           </p>
         </div>
@@ -173,9 +173,9 @@ export default function Deck({ cards }: DeckProps) {
             disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
             className={`${
               currentCardIndex === cards.length - 1 || timeLeft > 0
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-green-400 hover:bg-green-600'
-            } text-white px-4 py-2 rounded transition`}
+                ? 'bg-gray-500 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-700'
+            } text-white px-4 py-2 rounded transition-all duration-300 ease-in-out`}
           >
             Próximo
           </button>
