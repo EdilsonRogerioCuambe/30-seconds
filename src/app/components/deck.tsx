@@ -80,7 +80,7 @@ export default function Deck({ cards }: DeckProps) {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
       {!isPlaying && !isPaused && (
-        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#202024] p-4">
+        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#121214] p-4">
           <p className="text-2xl font-extrabold uppercase text-purple-400 text-center mb-2">
             Clique em iniciar para mostrar as cartas
           </p>
@@ -186,7 +186,7 @@ export default function Deck({ cards }: DeckProps) {
         </div>
       )}
       {isPaused && (
-        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#202024] p-4 mt-4">
+        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#121214] p-4 mt-4">
           <p className="text-2xl font-extrabold uppercase text-center text-purple-400 mb-2">
             Jogo pausado. Clique em continuar para retomar.
           </p>
