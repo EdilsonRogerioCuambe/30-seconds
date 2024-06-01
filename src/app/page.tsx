@@ -18,7 +18,9 @@ function shuffle(array: CardProps[]) {
 }
 
 export default async function Home() {
-  const deck = await db.card.findMany()
+  const deck = await db.card.findMany({
+    orderBy: { createdAt: 'asc' },
+  })
   const shuffledDeck = shuffle(deck)
   return (
     <main className="max-w-md mx-auto min-h-screen bg-[#202024] text-[#f5f5f5]">
