@@ -5,8 +5,8 @@ import axios from 'axios'
 
 export default function Page() {
   const [loading, setLoading] = useState(false)
-  const [frontWords, setFrontWords] = useState<string[]>(['', '', '', ''])
-  const [backWords, setBackWords] = useState<string[]>(['', '', '', ''])
+  const [frontWords, setFrontWords] = useState<string[]>(['', '', '', '', ''])
+  const [backWords, setBackWords] = useState<string[]>(['', '', '', '', ''])
 
   const handleSubmit = async () => {
     if (
@@ -25,8 +25,8 @@ export default function Page() {
       })
 
       toast.success('Card adicionado com sucesso')
-      setBackWords(['', '', '', ''])
-      setFrontWords(['', '', '', ''])
+      setBackWords(['', '', '', '', ''])
+      setFrontWords(['', '', '', '', ''])
     } catch (error) {
       console.error(error)
       toast.error('Erro ao adicionar card')
@@ -36,7 +36,7 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-md mx-auto my-8 p-4 border rounded shadow-lg">
+    <div className="max-w-md mx-auto my-24 p-4 border rounded shadow-lg">
       <h2 className="text-xl font-bold mb-4 text-center">Adicionar Card</h2>
       <div className="mb-4">
         <label htmlFor="front" className="block mb-2 text-sm">

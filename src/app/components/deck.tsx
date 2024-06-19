@@ -127,7 +127,7 @@ export default function Deck({ cards }: DeckProps) {
               animate={{ rotateY: isFlipped ? 180 : 0 }}
               transition={{ duration: 0.5 }}
             >
-              {currentCard.front.map((word, index) => (
+              {currentCard.front.slice(0, 5).map((word, index) => (
                 <div
                   key={index}
                   className="text-start uppercase text-black text-xl font-bold my-1"
@@ -142,7 +142,7 @@ export default function Deck({ cards }: DeckProps) {
               animate={{ rotateY: isFlipped ? 0 : 180 }}
               transition={{ duration: 0.5 }}
             >
-              {currentCard.back.map((word, index) => (
+              {currentCard.back.slice(0, 5).map((word, index) => (
                 <div
                   key={index}
                   className="text-xl uppercase text-black font-bold my-1"
