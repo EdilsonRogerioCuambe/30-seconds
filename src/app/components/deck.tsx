@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import tic from '@/assets/sounds/tic.mp3'
+import alarm from '@/assets/sounds/alarm.mp3'
 
 interface CardProps {
   id: string
@@ -23,7 +23,7 @@ export default function Deck({ cards }: DeckProps) {
   const [isPaused, setIsPaused] = useState(false)
 
   const playTic = async () => {
-    const audio = new Audio(tic)
+    const audio = new Audio(alarm)
     audio.play()
   }
 
@@ -33,7 +33,7 @@ export default function Deck({ cards }: DeckProps) {
         setTimeLeft(timeLeft - 1)
       }, 1000)
 
-      if (timeLeft <= 5 && timeLeft > 0) {
+      if (timeLeft === 1) {
         playTic()
       }
 
@@ -62,7 +62,7 @@ export default function Deck({ cards }: DeckProps) {
   const startGame = () => {
     setIsPlaying(true)
     setIsPaused(false)
-    setTimeLeft(30) // Reset the timer when starting the game
+    setTimeLeft(30)
   }
 
   const pauseGame = () => {
