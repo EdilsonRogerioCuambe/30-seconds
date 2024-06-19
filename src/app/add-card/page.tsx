@@ -1,19 +1,55 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import { Card } from '@prisma/client'
 
 export default function Page() {
   const [loading, setLoading] = useState(false)
   const [frontWords, setFrontWords] = useState<string[]>(['', '', '', '', ''])
   const [backWords, setBackWords] = useState<string[]>(['', '', '', '', ''])
+  const [existingWords, setExistingWords] = useState<Card[]>([])
+
+  useEffect(() => {
+    const fetchExistingWords = async () => {
+      try {
+        const response = await axios.get('/api/cards')
+        if (Array.isArray(response.data)) {
+          setExistingWords(response.data)
+        } else {
+          console.error('Response is not an array:', response.data)
+          toast.error('Erro ao carregar palavras existentes')
+        }
+      } catch (error) {
+        console.error(error)
+        toast.error('Erro ao carregar palavras existentes')
+      }
+    }
+    fetchExistingWords()
+  }, [])
+
+  console.log('existingWords:', existingWords)
 
   const handleSubmit = async () => {
     if (
-      frontWords.some((word) => word === '') ||
-      backWords.some((word) => word === '')
+      frontWords.some((word) => word.trim() === '') ||
+      backWords.some((word) => word.trim() === '')
     ) {
-      toast.error('Preencha todos os campos antes de adicionar o card')
+      toast.error(
+        'Preencha todos os campos com palavras válidas antes de adicionar o card',
+      )
+      return
+    }
+
+    const allWords = [...frontWords, ...backWords]
+    const duplicateWord = allWords.some((word) =>
+      existingWords.some(
+        (card) => card.front.includes(word) || card.back.includes(word),
+      ),
+    )
+
+    if (duplicateWord) {
+      toast.error('Uma ou mais palavras já existem no tabuleiro')
       return
     }
 
@@ -28,8 +64,10 @@ export default function Page() {
       setBackWords(['', '', '', '', ''])
       setFrontWords(['', '', '', '', ''])
     } catch (error) {
-      console.error(error)
-      toast.error('Erro ao adicionar card')
+      if (error instanceof Error) {
+        console.error(error.message)
+        toast.error(error.message)
+      }
     } finally {
       setLoading(false)
     }
