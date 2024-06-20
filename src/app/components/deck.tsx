@@ -122,7 +122,7 @@ export default function Deck({ cards }: DeckProps) {
             style={{ perspective: '1000px' }}
           >
             <motion.div
-              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-yellow-400 p-4"
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-red-400 p-4"
               style={{ backfaceVisibility: 'hidden' }}
               animate={{ rotateY: isFlipped ? 180 : 0 }}
               transition={{ duration: 0.5 }}
@@ -137,7 +137,7 @@ export default function Deck({ cards }: DeckProps) {
               ))}
             </motion.div>
             <motion.div
-              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-blue-400 p-4"
+              className="absolute w-full h-full flex flex-col justify-center items-start rounded-lg bg-green-400 p-4"
               style={{ backfaceVisibility: 'hidden' }}
               animate={{ rotateY: isFlipped ? 0 : 180 }}
               transition={{ duration: 0.5 }}
@@ -161,8 +161,8 @@ export default function Deck({ cards }: DeckProps) {
             onClick={toggleFlip}
             className={`${
               isFlipped
-                ? 'bg-yellow-400 hover:bg-yellow-600'
-                : 'bg-blue-400 hover:bg-blue-600'
+                ? 'bg-red-400 hover:bg-red-600'
+                : 'bg-green-400 hover:bg-green-600'
             } text-black uppercase font-extrabold px-4 py-2 rounded transition-all duration-300 ease-in-out`}
           >
             {isFlipped ? 'Frente' : 'Verso'}
@@ -198,7 +198,7 @@ export default function Deck({ cards }: DeckProps) {
           onClick={isPlaying ? pauseGame : isPaused ? continueGame : startGame}
           className={`${
             isPlaying
-              ? 'bg-red-400 hover:bg-red-600'
+              ? 'bg-pink-400 hover:bg-pink-600'
               : 'bg-green-400 hover:bg-green-600'
           } text-black font-extrabold uppercase px-4 py-2 rounded transition-all duration-300 ease-in-out`}
         >
