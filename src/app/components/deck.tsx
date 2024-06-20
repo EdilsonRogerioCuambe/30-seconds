@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import alarm from '@/assets/sounds/alarm.mp3'
@@ -21,10 +21,18 @@ export default function Deck({ cards }: DeckProps) {
   const [timeLeft, setTimeLeft] = useState(30)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const playTic = async () => {
-    const audio = new Audio(alarm)
-    audio.play()
+    if (audioRef.current) {
+      audioRef.current.play()
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.pause()
+          audioRef.current.currentTime = 0
+        }
+      }, 3000)
+    }
   }
 
   useEffect(() => {
@@ -57,6 +65,11 @@ export default function Deck({ cards }: DeckProps) {
       setCurrentCards(newOrder)
       setCurrentCardIndex(0)
     }
+
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    }
   }
 
   const startGame = () => {
@@ -79,6 +92,7 @@ export default function Deck({ cards }: DeckProps) {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
+      <audio ref={audioRef} src={alarm} />
       {!isPlaying && !isPaused && (
         <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#121214] p-4">
           <p className="text-2xl font-extrabold uppercase text-purple-400 text-center mb-2">
@@ -169,12 +183,7 @@ export default function Deck({ cards }: DeckProps) {
           </button>
           <button
             type="button"
-            onClick={
-              currentCardIndex === cards.length - 1 || timeLeft > 0
-                ? undefined
-                : nextCard
-            }
-            disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
+            onClick={nextCard}
             className={`${
               currentCardIndex === cards.length - 1 || timeLeft > 0
                 ? 'bg-gray-500 cursor-not-allowed'
