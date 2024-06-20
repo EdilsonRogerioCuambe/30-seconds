@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import alarm from '@/assets/sounds/alarm.mp3'
+import banner from '@/assets/images/banner.png'
+import Image from 'next/image'
 
 interface CardProps {
   id: string
@@ -94,10 +96,18 @@ export default function Deck({ cards }: DeckProps) {
     <div className="flex flex-col min-h-screen items-center justify-center">
       <audio ref={audioRef} src={alarm} />
       {!isPlaying && !isPaused && (
-        <div className="flex flex-col items-center justify-center w-96 h-52 rounded-lg shadow-lg bg-[#121214] p-4">
+        <div className="flex flex-col items-center justify-center rounded-lg">
           <p className="text-2xl font-extrabold uppercase text-purple-400 text-center mb-2">
             Clique em iniciar para mostrar as cartas
           </p>
+          <div className="w-full h-72 relative">
+            <Image
+              src={banner}
+              fill
+              className="rounded object-cover"
+              alt="Banner"
+            />
+          </div>
         </div>
       )}
       {(isPlaying || isPaused) && (
