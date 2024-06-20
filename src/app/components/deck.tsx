@@ -104,7 +104,7 @@ export default function Deck({ cards }: DeckProps) {
             <Image
               src={banner}
               fill
-              className="rounded object-cover"
+              className="rounded object-fill"
               alt="Banner"
             />
           </div>
