@@ -42,14 +42,16 @@ export default function Page() {
     }
 
     const allWords = [...frontWords, ...backWords]
-    const duplicateWord = allWords.some((word) =>
+    const duplicateWords = allWords.filter((word) =>
       existingWords.some(
         (card) => card.front.includes(word) || card.back.includes(word),
       ),
     )
 
-    if (duplicateWord) {
-      toast.error('Uma ou mais palavras já existem no tabuleiro')
+    if (duplicateWords.length > 0) {
+      toast.error(
+        `As seguintes palavras já existem no tabuleiro: ${duplicateWords.join(', ')}`,
+      )
       return
     }
 
