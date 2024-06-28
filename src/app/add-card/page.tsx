@@ -13,7 +13,7 @@ export default function Page() {
   useEffect(() => {
     const fetchExistingWords = async () => {
       try {
-        const response = await axios.get('/api/cards')
+        const response = await axios.get('/api/all-cards')
         if (Array.isArray(response.data)) {
           setExistingWords(response.data)
         } else {
