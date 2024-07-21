@@ -114,7 +114,7 @@ export default function Deck({ cards }: DeckProps) {
           </p>
           <input
             title="Adicione o código para iniciar o jogo"
-            type="text"
+            type="password"
             value={securityCode}
             onChange={(e) => setSecurityCode(e.target.value)}
             className="p-2 rounded border-2 bg-[#333333] text-[#f5f5f5] border-pink-400 mb-4"
