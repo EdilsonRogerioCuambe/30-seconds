@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
@@ -128,6 +129,13 @@ export default function Deck({ cards }: DeckProps) {
         </div>
       )}
       {isPlaying && (
+        <div className="text-sm font-bold uppercase text-center text-blue-400 mb-2">
+          <span>
+            ({currentCardIndex + 1}/{currentCards.length})
+          </span>
+        </div>
+      )}
+      {isPlaying && (
         <AnimatePresence onExitComplete={() => setIsFlipped(false)}>
           <motion.div
             animate={{
@@ -194,9 +202,8 @@ export default function Deck({ cards }: DeckProps) {
           <button
             type="button"
             onClick={nextCard}
-            disabled={currentCardIndex === cards.length - 1 || timeLeft > 0}
             className={`${
-              currentCardIndex === cards.length - 1 || timeLeft > 0
+              timeLeft > 0
                 ? 'bg-gray-500 cursor-not-allowed'
                 : 'bg-green-500 hover:bg-green-700'
             } text-black uppercase font-extrabold px-4 py-2 rounded transition-all duration-300 ease-in-out`}
