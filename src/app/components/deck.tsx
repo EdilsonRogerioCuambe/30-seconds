@@ -6,6 +6,7 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import alarm from '@/assets/sounds/alarm.mp3'
 import banner from '@/assets/images/banner.png'
 import Image from 'next/image'
+import toast from 'react-hot-toast'
 
 interface CardProps {
   id: string
@@ -97,7 +98,7 @@ export default function Deck({ cards }: DeckProps) {
     if (securityCode === 'use client') {
       setIsCodeVerified(true)
     } else {
-      alert('Código de segurança incorreto!')
+      toast.error('Código inválido. Tente novamente.', { duration: 4000 })
     }
   }
 
