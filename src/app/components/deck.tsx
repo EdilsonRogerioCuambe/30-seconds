@@ -236,6 +236,7 @@ export default function Deck({ cards }: DeckProps) {
               <button
                 type="button"
                 onClick={nextCard}
+                disabled={timeLeft > 0}
                 className={`${
                   timeLeft > 0
                     ? 'bg-gray-500 cursor-not-allowed'
