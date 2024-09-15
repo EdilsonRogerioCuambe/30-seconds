@@ -95,7 +95,7 @@ export default function Deck({ cards }: DeckProps) {
   }
 
   const verifyCode = () => {
-    if (securityCode === 'use client') {
+    if (securityCode === 'eslintignore') {
       setIsCodeVerified(true)
     } else {
       toast.error('Código inválido. Tente novamente.', { duration: 4000 })
